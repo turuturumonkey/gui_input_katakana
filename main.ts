@@ -3,10 +3,7 @@ input.onPinPressed(TouchPin.P0, function () {
 })
 input.onButtonPressed(Button.A, function () {
     if (状態 == 1) {
-        if (入力位置 >= 1) {
-            入力位置 += -1
-            LED点滅(入力位置)
-        } else {
+        if (入力位置 == 0) {
             basic.showLeds(`
                 . . . . .
                 . # # # .
@@ -28,7 +25,35 @@ input.onButtonPressed(Button.A, function () {
                 # # # # #
                 # . # . #
                 `)
-            入力位置 = 99
+            入力位置 = 49
+            LED点滅(入力位置)
+        } else if (入力位置 == 25) {
+            basic.showLeds(`
+                # # # # #
+                # . . . #
+                # . . . #
+                # . . . #
+                # # # # #
+                `)
+            basic.showLeds(`
+                . . . . .
+                . # # # .
+                . # . # .
+                . # # # .
+                . . . . .
+                `)
+            basic.showLeds(`
+                # # # # #
+                # # # # #
+                # # # # #
+                # # # # #
+                # # # # #
+                `)
+            入力位置 += -1
+            LED点滅(入力位置)
+        } else {
+            入力位置 += -1
+            LED点滅(入力位置)
         }
     }
 })
@@ -51,14 +76,16 @@ function LED点滅 (位置: number) {
     }
 }
 input.onButtonPressed(Button.AB, function () {
-	
+    文字記憶 = 配列
+    i = 0
+    for (let index = 0; index < 文字記憶.length; index++) {
+        basic.showString("" + (文字記憶[i]))
+        i += 1
+    }
 })
 input.onButtonPressed(Button.B, function () {
     if (状態 == 1) {
-        if (入力位置 <= 23) {
-            入力位置 += 1
-            LED点滅(入力位置)
-        } else {
+        if (入力位置 == 24) {
             basic.showLeds(`
                 . . . . .
                 . # # # .
@@ -80,6 +107,35 @@ input.onButtonPressed(Button.B, function () {
                 # # # # #
                 # . # . #
                 `)
+            入力位置 += 1
+            LED点滅(入力位置)
+        } else if (入力位置 == 49) {
+            basic.showLeds(`
+                # # # # #
+                # . . . #
+                # . . . #
+                # . . . #
+                # # # # #
+                `)
+            basic.showLeds(`
+                . . . . .
+                . # # # .
+                . # . # .
+                . # # # .
+                . . . . .
+                `)
+            basic.showLeds(`
+                # # # # #
+                # # # # #
+                # # # # #
+                # # # # #
+                # # # # #
+                `)
+            入力位置 = 0
+            LED点滅(入力位置)
+        } else {
+            入力位置 += 1
+            LED点滅(入力位置)
         }
     }
 })
@@ -88,7 +144,7 @@ input.onPinPressed(TouchPin.P1, function () {
 })
 input.onLogoEvent(TouchButtonEvent.Pressed, function () {
     if (状態 == 0) {
-        状態 = 1
+        入力位置 = 0
         basic.showLeds(`
             . # . . .
             # # # # #
@@ -117,7 +173,7 @@ input.onLogoEvent(TouchButtonEvent.Pressed, function () {
             . # . . #
             # . . # #
             `)
-        入力位置 = 0
+        状態 = 1
         basic.showLeds(`
             # # # # #
             # # # # #
@@ -127,13 +183,15 @@ input.onLogoEvent(TouchButtonEvent.Pressed, function () {
             `)
         LED点滅(入力位置)
     } else {
-        状態 = 0
         カナ表示()
+        状態 = 0
     }
 })
 function カナ表示 () {
 	
 }
+let i = 0
+let 文字記憶: number[] = []
 let LED状態 = 0
 let y位置 = 0
 let x位置 = 0
