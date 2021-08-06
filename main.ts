@@ -77,17 +77,24 @@ function LED点滅 (位置: number) {
     }
 }
 input.onButtonPressed(Button.AB, function () {
-    文字記憶 = 配列
+    文字列の配列 = []
+    i = 0
+    for (let index = 0; index < 配列.length; index++) {
+        文字列の配列.push(配列[i])
+        i += 1
+    }
+    文字数 = 文字列の配列.length
     文字記憶出力()
 })
 function 文字記憶出力 () {
+    let 文字配列: number[] = []
     i = 0
-    for (let index = 0; index < 文字記憶.length; index++) {
-        basic.showString("" + (文字記憶[i]))
+    for (let index = 0; index < 文字配列.length; index++) {
+        basic.showString("" + (文字配列[i]))
         i += 1
     }
     i = 0
-    for (let index = 0; index < 文字記憶.length; index++) {
+    for (let index = 0; index < 文字配列.length; index++) {
         basic.showString(String.fromCharCode(i))
         i += 1
     }
@@ -192,16 +199,14 @@ input.onLogoEvent(TouchButtonEvent.Pressed, function () {
             `)
         LED点滅(入力位置)
     } else {
-        KataKana()
         状態 = 0
     }
 })
-function KataKana () {
-    let mojisu = 0
-    mojiichi = 0
-    for (let index = 0; index < mojisu; index++) {
+function カナ表示 () {
+    i = 0
+    for (let index = 0; index < 文字数; index++) {
         let mojiretu = ""
-        if ("ア".compare(mojiretu.charAt(mojiichi)) == 0) {
+        if (文字列の配列[i] == 0) {
             basic.showLeds(`
                 # # # # #
                 . . . . #
@@ -209,7 +214,7 @@ function KataKana () {
                 . . # # .
                 # # . . .
                 `)
-        } else if ("イ".compare(mojiretu.charAt(mojiichi)) == 0) {
+        } else if (文字列の配列[i] == 1) {
             basic.showLeds(`
                 . . . . #
                 . . # # .
@@ -712,8 +717,9 @@ function KataKana () {
     }
 }
 let mojiichi = 0
+let 文字数 = 0
 let i = 0
-let 文字記憶: string[] = []
+let 文字列の配列: string[] = []
 let LED状態 = 0
 let y位置 = 0
 let x位置 = 0
