@@ -1,6 +1,10 @@
 input.onPinPressed(TouchPin.P0, function () {
-    配列.push(String.fromCharCode(入力位置 + 65))
-    music.playTone(262, music.beat(BeatFraction.Whole))
+    if (入力位置 == 36 || 入力位置 == 38 || (入力位置 == 46 || 入力位置 == 48)) {
+        music.playTone(131, music.beat(BeatFraction.Double))
+    } else {
+        配列.push(入力位置)
+        music.playTone(262, music.beat(BeatFraction.Whole))
+    }
 })
 input.onButtonPressed(Button.A, function () {
     if (状態 == 1) {
@@ -58,6 +62,9 @@ input.onButtonPressed(Button.A, function () {
         }
     }
 })
+input.onSound(DetectedSound.Loud, function () {
+    カナ表示()
+})
 function LED点滅 (位置: number) {
     if (位置 <= 24) {
         x位置 = 位置 % 5
@@ -84,21 +91,8 @@ input.onButtonPressed(Button.AB, function () {
         i += 1
     }
     文字数 = 文字列の配列.length
-    文字記憶出力()
+    カナ表示()
 })
-function 文字記憶出力 () {
-    let 文字配列: number[] = []
-    i = 0
-    for (let index = 0; index < 文字配列.length; index++) {
-        basic.showString("" + (文字配列[i]))
-        i += 1
-    }
-    i = 0
-    for (let index = 0; index < 文字配列.length; index++) {
-        basic.showString(String.fromCharCode(i))
-        i += 1
-    }
-}
 input.onButtonPressed(Button.B, function () {
     if (状態 == 1) {
         if (入力位置 == 24) {
@@ -198,6 +192,7 @@ input.onLogoEvent(TouchButtonEvent.Pressed, function () {
             # # # # #
             `)
         LED点滅(入力位置)
+        basic.pause(200)
     } else {
         状態 = 0
     }
@@ -205,7 +200,6 @@ input.onLogoEvent(TouchButtonEvent.Pressed, function () {
 function カナ表示 () {
     i = 0
     for (let index = 0; index < 文字数; index++) {
-        let mojiretu = ""
         if (文字列の配列[i] == 0) {
             basic.showLeds(`
                 # # # # #
@@ -222,7 +216,7 @@ function カナ表示 () {
                 . . # . .
                 . . # . .
                 `)
-        } else if ("ウ".compare(mojiretu.charAt(mojiichi)) == 0) {
+        } else if (文字列の配列[i] == 2) {
             basic.showLeds(`
                 . . # . .
                 # # # # #
@@ -230,7 +224,7 @@ function カナ表示 () {
                 . . . # .
                 . . # . .
                 `)
-        } else if ("エ".compare(mojiretu.charAt(mojiichi)) == 0) {
+        } else if (文字列の配列[i] == 3) {
             basic.showLeds(`
                 # # # # #
                 . . # . .
@@ -238,7 +232,7 @@ function カナ表示 () {
                 . . # . .
                 # # # # #
                 `)
-        } else if ("オ".compare(mojiretu.charAt(mojiichi)) == 0) {
+        } else if (文字列の配列[i] == 4) {
             basic.showLeds(`
                 . . . # .
                 # # # # #
@@ -246,7 +240,7 @@ function カナ表示 () {
                 . # . # .
                 # . . # .
                 `)
-        } else if ("カ".compare(mojiretu.charAt(mojiichi)) == 0) {
+        } else if (文字列の配列[i] == 5) {
             basic.showLeds(`
                 . . # . .
                 # # # # #
@@ -254,7 +248,7 @@ function カナ表示 () {
                 . # . . #
                 # . . # .
                 `)
-        } else if ("キ".compare(mojiretu.charAt(mojiichi)) == 0) {
+        } else if (文字列の配列[i] == 6) {
             basic.showLeds(`
                 . . # . .
                 # # # # #
@@ -262,7 +256,7 @@ function カナ表示 () {
                 # # # # #
                 . . # . .
                 `)
-        } else if ("ク".compare(mojiretu.charAt(mojiichi)) == 0) {
+        } else if (文字列の配列[i] == 7) {
             basic.showLeds(`
                 . # # # #
                 . # . . #
@@ -270,7 +264,7 @@ function カナ表示 () {
                 . . . # .
                 . # # . .
                 `)
-        } else if ("ケ".compare(mojiretu.charAt(mojiichi)) == 0) {
+        } else if (文字列の配列[i] == 8) {
             basic.showLeds(`
                 . # . . .
                 . # # # #
@@ -278,7 +272,7 @@ function カナ表示 () {
                 . . . # .
                 . . # . .
                 `)
-        } else if ("コ".compare(mojiretu.charAt(mojiichi)) == 0) {
+        } else if (文字列の配列[i] == 9) {
             basic.showLeds(`
                 # # # # #
                 . . . . #
@@ -286,7 +280,7 @@ function カナ表示 () {
                 . . . . #
                 # # # # #
                 `)
-        } else if ("サ".compare(mojiretu.charAt(mojiichi)) == 0) {
+        } else if (文字列の配列[i] == 10) {
             basic.showLeds(`
                 . # . # .
                 # # # # #
@@ -294,7 +288,7 @@ function カナ表示 () {
                 . . . # .
                 . # # . .
                 `)
-        } else if ("シ".compare(mojiretu.charAt(mojiichi)) == 0) {
+        } else if (文字列の配列[i] == 11) {
             basic.showLeds(`
                 # # . . #
                 . . . . #
@@ -302,7 +296,7 @@ function カナ表示 () {
                 . . . # .
                 # # # . .
                 `)
-        } else if ("ス".compare(mojiretu.charAt(mojiichi)) == 0) {
+        } else if (文字列の配列[i] == 12) {
             basic.showLeds(`
                 # # # # #
                 . . . . #
@@ -310,7 +304,7 @@ function カナ表示 () {
                 . . # # .
                 # # . . #
                 `)
-        } else if ("セ".compare(mojiretu.charAt(mojiichi)) == 0) {
+        } else if (文字列の配列[i] == 13) {
             basic.showLeds(`
                 . # . . .
                 # # # # #
@@ -318,7 +312,7 @@ function カナ表示 () {
                 . # . . .
                 . # # # #
                 `)
-        } else if ("ソ".compare(mojiretu.charAt(mojiichi)) == 0) {
+        } else if (文字列の配列[i] == 14) {
             basic.showLeds(`
                 # . . . #
                 # . . . #
@@ -326,7 +320,7 @@ function カナ表示 () {
                 . . . # .
                 # # # . .
                 `)
-        } else if ("タ".compare(mojiretu.charAt(mojiichi)) == 0) {
+        } else if (文字列の配列[i] == 15) {
             basic.showLeds(`
                 . # # # #
                 . # . . #
@@ -334,7 +328,7 @@ function カナ表示 () {
                 . . . . #
                 . # # # .
                 `)
-        } else if ("チ".compare(mojiretu.charAt(mojiichi)) == 0) {
+        } else if (文字列の配列[i] == 16) {
             basic.showLeds(`
                 . # # # #
                 . . . # .
@@ -342,7 +336,7 @@ function カナ表示 () {
                 . . . # .
                 . # # . .
                 `)
-        } else if ("ツ".compare(mojiretu.charAt(mojiichi)) == 0) {
+        } else if (文字列の配列[i] == 17) {
             basic.showLeds(`
                 # . # . #
                 # . # . #
@@ -350,7 +344,7 @@ function カナ表示 () {
                 . . . # .
                 # # # . .
                 `)
-        } else if ("テ".compare(mojiretu.charAt(mojiichi)) == 0) {
+        } else if (文字列の配列[i] == 18) {
             basic.showLeds(`
                 . # # # .
                 . . . . .
@@ -358,7 +352,7 @@ function カナ表示 () {
                 . . . # .
                 . # # . .
                 `)
-        } else if ("ト".compare(mojiretu.charAt(mojiichi)) == 0) {
+        } else if (文字列の配列[i] == 19) {
             basic.showLeds(`
                 . # . . .
                 . # . . .
@@ -366,7 +360,7 @@ function カナ表示 () {
                 . # . # #
                 . # . . .
                 `)
-        } else if ("ナ".compare(mojiretu.charAt(mojiichi)) == 0) {
+        } else if (文字列の配列[i] == 20) {
             basic.showLeds(`
                 . . . # .
                 # # # # #
@@ -374,7 +368,7 @@ function カナ表示 () {
                 . . . # .
                 . # # . .
                 `)
-        } else if ("ニ".compare(mojiretu.charAt(mojiichi)) == 0) {
+        } else if (文字列の配列[i] == 21) {
             basic.showLeds(`
                 . # # # .
                 . . . . .
@@ -382,7 +376,7 @@ function カナ表示 () {
                 . . . . .
                 # # # # #
                 `)
-        } else if ("ヌ".compare(mojiretu.charAt(mojiichi)) == 0) {
+        } else if (文字列の配列[i] == 22) {
             basic.showLeds(`
                 # # # # #
                 . . . . #
@@ -390,7 +384,7 @@ function カナ表示 () {
                 . . . # .
                 # # # . #
                 `)
-        } else if ("ネ".compare(mojiretu.charAt(mojiichi)) == 0) {
+        } else if (文字列の配列[i] == 23) {
             basic.showLeds(`
                 . . # . .
                 # # # # #
@@ -398,7 +392,7 @@ function カナ表示 () {
                 . # # # .
                 # . # . #
                 `)
-        } else if ("ノ".compare(mojiretu.charAt(mojiichi)) == 0) {
+        } else if (文字列の配列[i] == 24) {
             basic.showLeds(`
                 . . . . #
                 . . . . #
@@ -406,7 +400,7 @@ function カナ表示 () {
                 . . . # .
                 # # # . .
                 `)
-        } else if ("ハ".compare(mojiretu.charAt(mojiichi)) == 0) {
+        } else if (文字列の配列[i] == 25) {
             basic.showLeds(`
                 . # . # .
                 . # . # .
@@ -414,7 +408,7 @@ function カナ表示 () {
                 # . . . #
                 # . . . #
                 `)
-        } else if ("ヒ".compare(mojiretu.charAt(mojiichi)) == 0) {
+        } else if (文字列の配列[i] == 26) {
             basic.showLeds(`
                 # . . . .
                 # # # # #
@@ -422,7 +416,7 @@ function カナ表示 () {
                 # . . . .
                 # # # # #
                 `)
-        } else if ("フ".compare(mojiretu.charAt(mojiichi)) == 0) {
+        } else if (文字列の配列[i] == 27) {
             basic.showLeds(`
                 # # # # #
                 . . . . #
@@ -430,7 +424,7 @@ function カナ表示 () {
                 . . . # .
                 # # # . .
                 `)
-        } else if ("ヘ".compare(mojiretu.charAt(mojiichi)) == 0) {
+        } else if (文字列の配列[i] == 28) {
             basic.showLeds(`
                 . . . . .
                 . # . . .
@@ -438,7 +432,7 @@ function カナ表示 () {
                 . . . # .
                 . . . . #
                 `)
-        } else if ("ホ".compare(mojiretu.charAt(mojiichi)) == 0) {
+        } else if (文字列の配列[i] == 29) {
             basic.showLeds(`
                 . . # . .
                 # # # # #
@@ -446,7 +440,7 @@ function カナ表示 () {
                 # . # . #
                 # . # . #
                 `)
-        } else if ("マ".compare(mojiretu.charAt(mojiichi)) == 0) {
+        } else if (文字列の配列[i] == 30) {
             basic.showLeds(`
                 # # # # #
                 . . . . #
@@ -454,7 +448,7 @@ function カナ表示 () {
                 . . # . .
                 . . . # .
                 `)
-        } else if ("ミ".compare(mojiretu.charAt(mojiichi)) == 0) {
+        } else if (文字列の配列[i] == 31) {
             basic.showLeds(`
                 # # # # #
                 . . . . .
@@ -462,7 +456,7 @@ function カナ表示 () {
                 . . . . .
                 # # # # #
                 `)
-        } else if ("ム".compare(mojiretu.charAt(mojiichi)) == 0) {
+        } else if (文字列の配列[i] == 32) {
             basic.showLeds(`
                 . . # . .
                 . # . . .
@@ -470,7 +464,7 @@ function カナ表示 () {
                 # # # # #
                 . . . . #
                 `)
-        } else if ("メ".compare(mojiretu.charAt(mojiichi)) == 0) {
+        } else if (文字列の配列[i] == 33) {
             basic.showLeds(`
                 . . . . #
                 . # . . #
@@ -478,7 +472,7 @@ function カナ表示 () {
                 . . # # .
                 # # . . #
                 `)
-        } else if ("モ".compare(mojiretu.charAt(mojiichi)) == 0) {
+        } else if (文字列の配列[i] == 34) {
             basic.showLeds(`
                 # # # # #
                 . . # . .
@@ -486,7 +480,7 @@ function カナ表示 () {
                 . . # . .
                 . . # # #
                 `)
-        } else if ("ヤ".compare(mojiretu.charAt(mojiichi)) == 0) {
+        } else if (文字列の配列[i] == 35) {
             basic.showLeds(`
                 . # . . .
                 # # # # #
@@ -494,7 +488,7 @@ function カナ表示 () {
                 . # . # .
                 . # . . .
                 `)
-        } else if ("ユ".compare(mojiretu.charAt(mojiichi)) == 0) {
+        } else if (文字列の配列[i] == 37) {
             basic.showLeds(`
                 # # # # .
                 . . . # .
@@ -502,7 +496,7 @@ function カナ表示 () {
                 . . . # .
                 # # # # #
                 `)
-        } else if ("ヨ".compare(mojiretu.charAt(mojiichi)) == 0) {
+        } else if (文字列の配列[i] == 39) {
             basic.showLeds(`
                 # # # # #
                 . . . . #
@@ -510,7 +504,7 @@ function カナ表示 () {
                 . . . . #
                 # # # # #
                 `)
-        } else if ("ラ".compare(mojiretu.charAt(mojiichi)) == 0) {
+        } else if (文字列の配列[i] == 40) {
             basic.showLeds(`
                 # # # # #
                 . . . . .
@@ -518,7 +512,7 @@ function カナ表示 () {
                 . . . . #
                 # # # # .
                 `)
-        } else if ("リ".compare(mojiretu.charAt(mojiichi)) == 0) {
+        } else if (文字列の配列[i] == 41) {
             basic.showLeds(`
                 # . . . #
                 # . . . #
@@ -526,7 +520,7 @@ function カナ表示 () {
                 . . . # .
                 . # # . .
                 `)
-        } else if ("ル".compare(mojiretu.charAt(mojiichi)) == 0) {
+        } else if (文字列の配列[i] == 42) {
             basic.showLeds(`
                 . # . # .
                 . # . # .
@@ -534,7 +528,7 @@ function カナ表示 () {
                 # . . # #
                 # . . # .
                 `)
-        } else if ("レ".compare(mojiretu.charAt(mojiichi)) == 0) {
+        } else if (文字列の配列[i] == 43) {
             basic.showLeds(`
                 # . . . .
                 # . . . .
@@ -542,7 +536,7 @@ function カナ表示 () {
                 # . . # .
                 # # # . .
                 `)
-        } else if ("ロ".compare(mojiretu.charAt(mojiichi)) == 0) {
+        } else if (文字列の配列[i] == 44) {
             basic.showLeds(`
                 # # # # #
                 # . . . #
@@ -550,7 +544,7 @@ function カナ表示 () {
                 # . . . #
                 # # # # #
                 `)
-        } else if ("ワ".compare(mojiretu.charAt(mojiichi)) == 0) {
+        } else if (文字列の配列[i] == 45) {
             basic.showLeds(`
                 # # # # #
                 # . . . #
@@ -558,7 +552,7 @@ function カナ表示 () {
                 . . . . #
                 . # # # .
                 `)
-        } else if ("ヲ".compare(mojiretu.charAt(mojiichi)) == 0) {
+        } else if (文字列の配列[i] == 47) {
             basic.showLeds(`
                 # # # # #
                 . . . . #
@@ -566,7 +560,7 @@ function カナ表示 () {
                 . . . . #
                 # # # # .
                 `)
-        } else if ("ン".compare(mojiretu.charAt(mojiichi)) == 0) {
+        } else if (文字列の配列[i] == 49) {
             basic.showLeds(`
                 # # . . #
                 . . . . #
@@ -574,7 +568,7 @@ function カナ表示 () {
                 . . . # .
                 # # # . .
                 `)
-        } else if ("゛".compare(mojiretu.charAt(mojiichi)) == 0) {
+        } else if (文字列の配列[i] == 50) {
             basic.showLeds(`
                 # . # . .
                 # . # . .
@@ -582,7 +576,7 @@ function カナ表示 () {
                 . . . . .
                 . . . . .
                 `)
-        } else if ("゜".compare(mojiretu.charAt(mojiichi)) == 0) {
+        } else if (文字列の配列[i] == 51) {
             basic.showLeds(`
                 # # # . .
                 # . # . .
@@ -590,7 +584,7 @@ function カナ表示 () {
                 . . . . .
                 . . . . .
                 `)
-        } else if ("ー".compare(mojiretu.charAt(mojiichi)) == 0) {
+        } else if (文字列の配列[i] == 52) {
             basic.showLeds(`
                 . . . . .
                 . . . . .
@@ -598,7 +592,7 @@ function カナ表示 () {
                 . . . . .
                 . . . . .
                 `)
-        } else if ("ッ".compare(mojiretu.charAt(mojiichi)) == 0) {
+        } else if (文字列の配列[i] == 53) {
             basic.showLeds(`
                 . . . . .
                 . . . . .
@@ -606,7 +600,7 @@ function カナ表示 () {
                 # # . # .
                 . . # . .
                 `)
-        } else if ("！".compare(mojiretu.charAt(mojiichi)) == 0) {
+        } else if (文字列の配列[i] == 54) {
             basic.showLeds(`
                 . . # . .
                 . . # . .
@@ -614,7 +608,7 @@ function カナ表示 () {
                 . . . . .
                 . . # . .
                 `)
-        } else if ("？".compare(mojiretu.charAt(mojiichi)) == 0) {
+        } else if (文字列の配列[i] == 55) {
             basic.showLeds(`
                 . # # # .
                 # . . . #
@@ -622,7 +616,7 @@ function カナ表示 () {
                 . . . . .
                 . . # . .
                 `)
-        } else if ("、".compare(mojiretu.charAt(mojiichi)) == 0) {
+        } else if (文字列の配列[i] == 56) {
             basic.showLeds(`
                 . . . . .
                 . . . . .
@@ -630,7 +624,7 @@ function カナ表示 () {
                 . . # . .
                 . . . # .
                 `)
-        } else if ("。".compare(mojiretu.charAt(mojiichi)) == 0) {
+        } else if (文字列の配列[i] == 57) {
             basic.showLeds(`
                 . . . . .
                 . . . . .
@@ -638,7 +632,7 @@ function カナ表示 () {
                 . # . # .
                 . # # # .
                 `)
-        } else if ("".compare(mojiretu.charAt(mojiichi)) == 0) {
+        } else if (文字列の配列[i] == 58) {
             basic.showLeds(`
                 . . . . .
                 . . . . .
@@ -646,7 +640,7 @@ function カナ表示 () {
                 . . . . .
                 . . . . .
                 `)
-        } else if ("・".compare(mojiretu.charAt(mojiichi)) == 0) {
+        } else if (文字列の配列[i] == 59) {
             basic.showLeds(`
                 . . . . .
                 . . . . .
@@ -654,7 +648,7 @@ function カナ表示 () {
                 . . . . .
                 . . . . .
                 `)
-        } else if ("：".compare(mojiretu.charAt(mojiichi)) == 0) {
+        } else if (文字列の配列[i] == 60) {
             basic.showLeds(`
                 . . . . .
                 . . # . .
@@ -662,7 +656,7 @@ function カナ表示 () {
                 . . # . .
                 . . . . .
                 `)
-        } else if ("；".compare(mojiretu.charAt(mojiichi)) == 0) {
+        } else if (文字列の配列[i] == 61) {
             basic.showLeds(`
                 . . . . .
                 . . # . .
@@ -670,7 +664,7 @@ function カナ表示 () {
                 . . # . .
                 . # . . .
                 `)
-        } else if ("＝".compare(mojiretu.charAt(mojiichi)) == 0) {
+        } else if (文字列の配列[i] == 62) {
             basic.showLeds(`
                 . . . . .
                 # # # # #
@@ -678,7 +672,7 @@ function カナ表示 () {
                 # # # # #
                 . . . . .
                 `)
-        } else if ("＿".compare(mojiretu.charAt(mojiichi)) == 0) {
+        } else if (文字列の配列[i] == 63) {
             basic.showLeds(`
                 . . . . .
                 . . . . .
@@ -686,7 +680,7 @@ function カナ表示 () {
                 . . . . .
                 # # # # #
                 `)
-        } else if ("ャ".compare(mojiretu.charAt(mojiichi)) == 0) {
+        } else if (文字列の配列[i] == 64) {
             basic.showLeds(`
                 . . . . .
                 . # . . .
@@ -694,7 +688,7 @@ function カナ表示 () {
                 . # # . .
                 . # . . .
                 `)
-        } else if ("ュ".compare(mojiretu.charAt(mojiichi)) == 0) {
+        } else if (文字列の配列[i] == 65) {
             basic.showLeds(`
                 . . . . .
                 . . . . .
@@ -702,7 +696,7 @@ function カナ表示 () {
                 . . # . .
                 # # # # .
                 `)
-        } else if ("ョ".compare(mojiretu.charAt(mojiichi)) == 0) {
+        } else if (文字列の配列[i] == 66) {
             basic.showLeds(`
                 . . . . .
                 # # # . .
@@ -713,18 +707,18 @@ function カナ表示 () {
         } else {
             basic.showIcon(IconNames.No)
         }
-        mojiichi += 1
+        i += 1
     }
 }
-let mojiichi = 0
 let 文字数 = 0
 let i = 0
-let 文字列の配列: string[] = []
+let 文字列の配列: number[] = []
 let LED状態 = 0
 let y位置 = 0
 let x位置 = 0
 let 入力位置 = 0
-let 配列: string[] = []
+let 配列: number[] = []
 let 状態 = 0
+let mojiretu = ""
 状態 = 0
 配列 = []
