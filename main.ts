@@ -1,9 +1,11 @@
 input.onPinPressed(TouchPin.P0, function () {
-    if (入力位置 == 36 || 入力位置 == 38 || (入力位置 == 46 || 入力位置 == 48)) {
-        music.playTone(131, music.beat(BeatFraction.Double))
-    } else {
-        配列.push(入力位置)
-        music.playTone(262, music.beat(BeatFraction.Whole))
+    if (状態 == 1) {
+        if (入力位置 == 36 || 入力位置 == 38 || (入力位置 == 46 || 入力位置 == 48)) {
+            music.playTone(131, music.beat(BeatFraction.Double))
+        } else {
+            配列.push(入力位置)
+            music.playTone(262, music.beat(BeatFraction.Whole))
+        }
     }
 })
 input.onButtonPressed(Button.A, function () {
@@ -23,13 +25,6 @@ input.onButtonPressed(Button.A, function () {
                 # . . . #
                 # # # # #
                 `)
-            basic.showLeds(`
-                # # # # #
-                # # # # #
-                # . # . #
-                # # # # #
-                # . # . #
-                `)
             入力位置 = 49
             LED点滅(入力位置)
         } else if (入力位置 == 25) {
@@ -47,51 +42,59 @@ input.onButtonPressed(Button.A, function () {
                 . # # # .
                 . . . . .
                 `)
-            basic.showLeds(`
-                # # # # #
-                # # # # #
-                # # # # #
-                # # # # #
-                # # # # #
-                `)
             入力位置 += -1
             LED点滅(入力位置)
         } else {
             入力位置 += -1
+            if (入力位置 == 36 || 入力位置 == 38 || (入力位置 == 46 || 入力位置 == 48)) {
+                入力位置 += -1
+            }
             LED点滅(入力位置)
         }
     }
+    basic.pause(200)
 })
 input.onSound(DetectedSound.Loud, function () {
     カナ表示()
 })
 function LED点滅 (位置: number) {
     if (位置 <= 24) {
+        basic.showLeds(`
+            # # # # #
+            # # # # #
+            # # # # #
+            # # # # #
+            # # # # #
+            `)
         x位置 = 位置 % 5
         y位置 = Math.floor(位置 / 5)
     } else {
+        basic.showLeds(`
+            # # # # #
+            # # # # #
+            # . # . #
+            # # # # #
+            # . # . #
+            `)
         x位置 = 位置 % 5
         y位置 = Math.floor(位置 / 5) - 5
     }
-    if (led.point(x位置, y位置)) {
-        LED状態 = 1
-    } else {
-        LED状態 = 0
-    }
-    for (let index = 0; index < 4; index++) {
+    for (let index = 0; index < 2; index++) {
         led.toggle(x位置, y位置)
         basic.pause(100)
     }
 }
 input.onButtonPressed(Button.AB, function () {
-    文字列の配列 = []
-    i = 0
-    for (let index = 0; index < 配列.length; index++) {
-        文字列の配列.push(配列[i])
-        i += 1
+    if (状態 == 1) {
+        文字列の配列 = []
+        i = 0
+        for (let index = 0; index < 配列.length; index++) {
+            文字列の配列.push(配列[i])
+            i += 1
+        }
+        文字数 = 文字列の配列.length
+        カナ表示()
     }
-    文字数 = 文字列の配列.length
-    カナ表示()
 })
 input.onButtonPressed(Button.B, function () {
     if (状態 == 1) {
@@ -110,13 +113,6 @@ input.onButtonPressed(Button.B, function () {
                 # . . . #
                 # # # # #
                 `)
-            basic.showLeds(`
-                # # # # #
-                # # # # #
-                # . # . #
-                # # # # #
-                # . # . #
-                `)
             入力位置 += 1
             LED点滅(入力位置)
         } else if (入力位置 == 49) {
@@ -134,23 +130,22 @@ input.onButtonPressed(Button.B, function () {
                 . # # # .
                 . . . . .
                 `)
-            basic.showLeds(`
-                # # # # #
-                # # # # #
-                # # # # #
-                # # # # #
-                # # # # #
-                `)
             入力位置 = 0
             LED点滅(入力位置)
         } else {
             入力位置 += 1
+            if (入力位置 == 36 || 入力位置 == 38 || (入力位置 == 46 || 入力位置 == 48)) {
+                入力位置 += 1
+            }
             LED点滅(入力位置)
         }
     }
+    basic.pause(200)
 })
 input.onPinPressed(TouchPin.P1, function () {
-    配列.pop()
+    if (状態 == 1) {
+        配列.pop()
+    }
 })
 input.onLogoEvent(TouchButtonEvent.Pressed, function () {
     if (状態 <= 1) {
@@ -180,8 +175,8 @@ input.onLogoEvent(TouchButtonEvent.Pressed, function () {
             . . # . .
             # # # # #
             . . # . #
-            . # . . #
-            # . . # #
+            . . # . #
+            . # . # #
             `)
         状態 = 1
         basic.showLeds(`
@@ -709,11 +704,18 @@ function カナ表示 () {
         }
         i += 1
     }
+    basic.pause(1000)
+    basic.showLeds(`
+        . . . . .
+        . . . . .
+        . . . . .
+        . . . . .
+        . . . . .
+        `)
 }
 let 文字数 = 0
 let i = 0
 let 文字列の配列: number[] = []
-let LED状態 = 0
 let y位置 = 0
 let x位置 = 0
 let 入力位置 = 0
@@ -722,3 +724,4 @@ let 状態 = 0
 let mojiretu = ""
 状態 = 0
 配列 = []
+basic.showIcon(IconNames.Heart)
